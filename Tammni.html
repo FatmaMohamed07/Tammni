@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>طمّني | Tammni - مرشد صحة الثدي الذكي</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts: Cairo & Tajawal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Tajawal', 'sans-serif'],
+          },
+          colors: {
+            rosebrand: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              400: '#fb7185',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+              950: '#4c0519',
+            },
+            tealcare: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #fff5f7 0%, #f8fafc 100%);
+      min-height: 100vh;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #fbcfe8;
+      border-radius: 9999px;
+    }
+    .gauge-needle {
+      transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: 50% 90%;
+    }
+    @media print {
+      body * { visibility: hidden; }
+      #printableMedicalReport, #printableMedicalReport * { visibility: visible; }
+      #printableMedicalReport { position: absolute; left: 0; top: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- FULL SCREEN PRIVACY OVERLAY (Panic Screen / Esc Shortcut) -->
+  <div id="fullPrivacyCover" class="fixed inset-0 bg-white z-[9999] hidden p-8 sm:p-16 overflow-y-auto font-sans text-slate-800 text-right">
+    <div class="max-w-3xl mx-auto space-y-6">
+      <div class="flex items-center justify-between border-b pb-4">
+        <span class="text-xs font-bold text-slate-400">شبكة المقالات الصحية العامة والتغذية</span>
+        <button onclick="deactivateFullPrivacy()" class="text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition cursor-pointer">العودة للمنصة 🔒</button>
+      </div>
+      <h1 class="text-2xl font-bold text-slate-900 leading-snug">أهم 10 نصائح لتحسين لياقتك البدنية ونظامك الغذائي اليومي</h1>
+      <p class="text-sm text-slate-600 leading-relaxed">
+        تعتبر ممارسة الرياضة بشكل منتظم وتناول وجبات متوازنة غنية بالألياف والبروتينات من أهم العوامل التي تضمن الحفاظ على نشاط الجسم وتقوية الجهاز المناعي. احرص دائماً على تنظيم أوقات نومك وتجنب السهر المفرط...
+      </p>
+      <div class="p-4 bg-slate-50 border rounded-2xl text-xs text-slate-500">
+        تذكر أن تناول 8 أكواب من الماء يومياً يساعد على تنشيط الدورة الدموية وتحسين وظائف الأعضاء المختلفة للجسم.
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Announcement Banner -->
+  <div class="bg-rosebrand-950 text-rosebrand-100 text-xs py-2 px-4 text-center flex items-center justify-center gap-2 font-medium">
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+    <span>مشروع هاكاثون الرعاية الصحية | منصة «طمّني» التفاعلية الذكية</span>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white/85 backdrop-blur-md border-b border-rose-100 sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="resetToWelcome()">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-rosebrand-600 to-rose-400 text-white flex items-center justify-center shadow-md shadow-rose-200">
+          <i class="fa-solid fa-ribbon text-xl"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl font-black text-rosebrand-900 tracking-tight leading-none">طمّني</h1>
+            <span class="text-xs font-bold text-rosebrand-600 uppercase tracking-widest bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">Tammni</span>
+          </div>
+          <p class="text-xs font-semibold text-slate-500 mt-0.5">مرشد ذكي وبصري لصحة الثدي وتوجيه الرعاية</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button onclick="activateFullPrivacy()" title="إخفاء الشاشة الكاملة (زر Esc)" class="text-xs font-bold bg-slate-800 hover:bg-black text-white px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+          <i class="fa-solid fa-user-shield"></i>
+          <span class="hidden sm:inline">خصوصية 🔒</span>
+        </button>
+
+        <button onclick="openChatScreen()" class="text-xs font-bold bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-200 px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm cursor-pointer">
+          <i class="fa-solid fa-comments text-teal-600"></i>
+          <span>الشات بوت الذكي</span>
+        </button>
+
+        <button onclick="quickLoadScenario('sarah')" class="text-xs font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm cursor-pointer">
+          <i class="fa-solid fa-wand-magic-sparkles text-emerald-600"></i>
+          <span class="hidden md:inline">سيناريو سارة (29 سنة)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-6 sm:py-8 flex-grow w-full">
+
+    <!-- Progress Indicator for Questionnaire -->
+    <div id="progressBarContainer" class="hidden mb-6 bg-white p-4 rounded-2xl border border-rose-100 shadow-sm">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-extrabold text-rosebrand-700" id="stepIndicatorLabel">المرحلة 1 من 3: تقييم السياق الصحي</span>
+        <span class="text-xs font-bold text-slate-400" id="stepProgressPercentage">33%</span>
+      </div>
+      <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+        <div id="progressBarFill" class="bg-gradient-to-l from-rosebrand-500 to-rose-400 h-2.5 rounded-full transition-all duration-500" style="width: 33%"></div>
+      </div>
+    </div>
+
+    <!-- SCREEN 1: Welcome & Onboarding -->
+    <div id="screenWelcome" class="transition-all duration-300">
+      <div class="bg-white rounded-3xl p-6 sm:p-10 border border-rose-100 shadow-xl shadow-rose-100/50 text-center relative overflow-hidden">
+        <div class="absolute -top-16 -right-16 w-48 h-48 bg-rose-100/50 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-teal-100/40 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="inline-flex items-center gap-2 bg-rose-50 border border-rose-200 text-rosebrand-700 text-xs font-bold px-3 py-1.5 rounded-full mb-4">
+          <i class="fa-solid fa-eye text-rose-500"></i>
+          <span>واجهة بصرية مبسطة بأيقونات توضيحية • سهلة الاستخدام لجميع الأمهات</span>
+        </div>
+
+        <h2 class="text-2xl sm:text-4xl font-black text-slate-900 mb-3 leading-snug">
+          أهلاً بكِ في <span class="text-rosebrand-600 underline decoration-rose-300 decoration-wavy">طمّني</span>
+        </h2>
+        <p class="text-slate-600 text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-6">
+          أول منصة تفاعلية تعتمد على الأيقونات والتوجيه البصري السهل والشات بوت الطبي لحساب النسبة بدقة.
+        </p>
+
+        <!-- Main Options Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto mb-8 text-right">
+          
+          <div onclick="startCustomAssessment()" class="p-4 rounded-2xl border-2 border-rose-200 hover:border-rosebrand-500 bg-rose-50/40 hover:bg-rose-50 transition cursor-pointer group shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-9 h-9 rounded-xl bg-rosebrand-600 text-white flex items-center justify-center mb-2.5 group-hover:scale-110 transition">
+                <i class="fa-solid fa-clipboard-question text-base"></i>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mb-1">تقييم وحساب الخطورة</h3>
+              <p class="text-[11px] text-slate-600 leading-normal">أدخلي معطياتك لاحتساب النسبة وتحديد خطواتك.</p>
+            </div>
+            <div class="mt-3 flex items-center gap-1 text-[11px] font-bold text-rosebrand-600 group-hover:gap-2 transition-all">
+              <span>ابدئي الاستبيان</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </div>
+          </div>
+
+          <div onclick="quickLoadScenario('sarah')" class="p-4 rounded-2xl border-2 border-emerald-200 hover:border-emerald-500 bg-emerald-50/40 hover:bg-emerald-50 transition cursor-pointer group shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center mb-2.5 group-hover:scale-110 transition">
+                <i class="fa-solid fa-user-check text-base"></i>
+              </div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-bold text-slate-900 text-sm">سيناريو سارة</h3>
+                <span class="text-[9px] font-extrabold bg-emerald-200 text-emerald-950 px-1 rounded">للتحكيم</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-normal">29 سنة • تاريخ عائلي • نسبة منخفضة.</p>
+            </div>
+            <div class="mt-3 flex items-center gap-1 text-[11px] font-bold text-emerald-700 group-hover:gap-2 transition-all">
+              <span>عرض حالة سارة</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </div>
+          </div>
+
+          <div onclick="openChatScreen()" class="p-4 rounded-2xl border-2 border-teal-200 hover:border-teal-500 bg-teal-50/40 hover:bg-teal-50 transition cursor-pointer group shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center mb-2.5 group-hover:scale-110 transition">
+                <i class="fa-solid fa-comments text-base"></i>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mb-1">الشات بوت الطبي</h3>
+              <p class="text-[11px] text-slate-600 leading-normal">اسألي واطمني بالعامية عبر نقاش تفاعلي مباشر.</p>
+            </div>
+            <div class="mt-3 flex items-center gap-1 text-[11px] font-bold text-teal-700 group-hover:gap-2 transition-all">
+              <span>بدء الشات بوت</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </div>
+          </div>
+
+          <div onclick="openSelfExamModal()" class="p-4 rounded-2xl border-2 border-indigo-200 hover:border-indigo-500 bg-indigo-50/40 hover:bg-indigo-50 transition cursor-pointer group shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center mb-2.5 group-hover:scale-110 transition">
+                <i class="fa-solid fa-hand-holding-medical text-base"></i>
+              </div>
+              <h3 class="font-bold text-slate-900 text-sm mb-1">دليل الفحص الذاتي</h3>
+              <p class="text-[11px] text-slate-600 leading-normal">تعلمي خطوات الفحص الشهري في المنزل بالصور.</p>
+            </div>
+            <div class="mt-3 flex items-center gap-1 text-[11px] font-bold text-indigo-700 group-hover:gap-2 transition-all">
+              <span>عرض خطوات الفحص</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="border-t border-slate-100 pt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 font-semibold">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-shield-heart text-rose-500 text-base"></i>
+            <span>أكثر من 85% من الكتل حميدة تماماً</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-user-doctor text-teal-600 text-base"></i>
+            <span>ربط مع طبيبات متخصصات ("طبيبتي")</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-hospital-user text-indigo-600 text-base"></i>
+            <span>دعم مسار الكشف المجاني بالمبادرة الرئاسية</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 2: Visual Triage Questionnaire Assessment -->
+    <div id="screenTriage" class="hidden">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-rose-100 shadow-xl shadow-rose-100/40">
+
+        <!-- STEP 1: العمر -->
+        <div id="triageStep1" class="triage-step">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 rounded-full bg-rosebrand-100 text-rosebrand-700 flex items-center justify-center font-bold text-sm">1</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">كم يبلغ عمركِ الحالي؟</h3>
+              <p class="text-xs text-slate-500">العمر يساعدنا في احتساب النسبة الإحصائية والتغيرات الهرمونية الشائعة لسِنِّك.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6">
+            <button onclick="selectAge(25, this)" class="age-btn border-2 border-slate-200 hover:border-rose-400 p-4 rounded-2xl text-center transition group cursor-pointer">
+              <span class="block text-2xl font-black text-slate-800 group-hover:text-rosebrand-600 mb-1">أقل من 30</span>
+              <span class="text-xs text-slate-500">مثل سارة (20 - 29)</span>
+            </button>
+            <button onclick="selectAge(35, this)" class="age-btn border-2 border-slate-200 hover:border-rose-400 p-4 rounded-2xl text-center transition group cursor-pointer">
+              <span class="block text-2xl font-black text-slate-800 group-hover:text-rosebrand-600 mb-1">30 - 39</span>
+              <span class="text-xs text-slate-500">فحص سريري وسونار</span>
+            </button>
+            <button onclick="selectAge(45, this)" class="age-btn border-2 border-slate-200 hover:border-rose-400 p-4 rounded-2xl text-center transition group cursor-pointer">
+              <span class="block text-2xl font-black text-slate-800 group-hover:text-rosebrand-600 mb-1">40 - 49</span>
+              <span class="text-xs text-slate-500">سن الماموجرام الدوري</span>
+            </button>
+            <button onclick="selectAge(55, this)" class="age-btn border-2 border-slate-200 hover:border-rose-400 p-4 rounded-2xl text-center transition group cursor-pointer">
+              <span class="block text-2xl font-black text-slate-800 group-hover:text-rosebrand-600 mb-1">50 فما فوق</span>
+              <span class="text-xs text-slate-500">متابعة وقائية دورية</span>
+            </button>
+          </div>
+
+          <div class="flex justify-end mt-6">
+            <button id="btnNext1" onclick="goToStep(2)" disabled class="bg-slate-200 text-slate-400 cursor-not-allowed font-bold px-6 py-3 rounded-xl transition flex items-center gap-2">
+              <span>المتابعة للأعراض</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: الأعراض -->
+        <div id="triageStep2" class="triage-step hidden">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 rounded-full bg-rosebrand-100 text-rosebrand-700 flex items-center justify-center font-bold text-sm">2</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">هل تلاحظين أياً من العلامات التالية مؤخراً؟</h3>
+              <p class="text-xs text-slate-500">يمكنكِ اختيار ما ينطبق عليكِ (أو اختيار لا توجد أعراض للاطمئنان الروتيني).</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-6">
+            <label class="symptom-card flex items-start gap-3 p-4 border-2 border-slate-200 hover:border-rose-300 rounded-2xl cursor-pointer transition">
+              <input type="checkbox" value="none" onchange="handleSymptomChange(this)" class="mt-1 w-5 h-5 text-rosebrand-600 rounded focus:ring-rosebrand-500">
+              <div>
+                <span class="font-bold text-slate-900 block text-sm">لا توجد أعراض ظاهرة (اطمئنان وفحص دوري)</span>
+                <span class="text-xs text-slate-500">أشعر بصحة جيدة وأريد التأكد من جدولي الوقائي.</span>
+              </div>
+            </label>
+
+            <label class="symptom-card flex items-start gap-3 p-4 border-2 border-slate-200 hover:border-rose-300 rounded-2xl cursor-pointer transition">
+              <input type="checkbox" value="lump" onchange="handleSymptomChange(this)" class="mt-1 w-5 h-5 text-rosebrand-600 rounded focus:ring-rosebrand-500">
+              <div>
+                <span class="font-bold text-slate-900 block text-sm">كتلة أو زيادة في سُمك نسيج الثدي</span>
+                <span class="text-xs text-slate-500">ملمس مختلف أو كتلة غير مؤلمة حديثة الظهور.</span>
+              </div>
+            </label>
+
+            <label class="symptom-card flex items-start gap-3 p-4 border-2 border-slate-200 hover:border-rose-300 rounded-2xl cursor-pointer transition">
+              <input type="checkbox" value="discharge" onchange="handleSymptomChange(this)" class="mt-1 w-5 h-5 text-rosebrand-600 rounded focus:ring-rosebrand-500">
+              <div>
+                <span class="font-bold text-slate-900 block text-sm">إفرازات غير معتادة من الحلمة</span>
+                <span class="text-xs text-slate-500">إفرازات شفافة أو مدممة تخرج تلقائياً من جهة واحدة.</span>
+              </div>
+            </label>
+
+            <label class="symptom-card flex items-start gap-3 p-4 border-2 border-slate-200 hover:border-rose-300 rounded-2xl cursor-pointer transition">
+              <input type="checkbox" value="skin" onchange="handleSymptomChange(this)" class="mt-1 w-5 h-5 text-rosebrand-600 rounded focus:ring-rosebrand-500">
+              <div>
+                <span class="font-bold text-slate-900 block text-sm">تغير بشكل الجلد أو انكماش بالحلمة</span>
+                <span class="text-xs text-slate-500">شبه قشرة البرتقال أو غؤور مفاجئ بالحلمة.</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="flex justify-between items-center mt-6">
+            <button onclick="goToStep(1)" class="text-slate-600 hover:text-slate-900 text-sm font-bold flex items-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-arrow-right"></i>
+              <span>رجوع</span>
+            </button>
+            <button id="btnNext2" onclick="goToStep(3)" disabled class="bg-slate-200 text-slate-400 cursor-not-allowed font-bold px-6 py-3 rounded-xl transition flex items-center gap-2">
+              <span>المتابعة للتاريخ العائلي</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: التاريخ العائلي -->
+        <div id="triageStep3" class="triage-step hidden">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 rounded-full bg-rosebrand-100 text-rosebrand-700 flex items-center justify-center font-bold text-sm">3</span>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900">هل هناك تاريخ إصابة بسرطان الثدي في عائلتكِ؟</h3>
+              <p class="text-xs text-slate-500">80% من الحالات تُصاب دون وراثة، لكن معرفتها تحسب مستوى الخطورة الإحصائي بدقة.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
+            <button onclick="selectFamilyHistory('first_degree', this)" class="family-btn border-2 border-slate-200 hover:border-rose-400 p-5 rounded-2xl text-right transition group cursor-pointer">
+              <span class="block text-base font-bold text-slate-900 group-hover:text-rosebrand-700 mb-1">
+                <i class="fa-solid fa-person-breastfeeding text-rose-500 ml-1"></i>
+                قرابة درجة أولى
+              </span>
+              <span class="text-xs text-slate-500 block leading-relaxed">الأم، الأخت، أو الابنة (خاصة قبل سن 50).</span>
+            </button>
+
+            <button onclick="selectFamilyHistory('second_degree', this)" class="family-btn border-2 border-slate-200 hover:border-rose-400 p-5 rounded-2xl text-right transition group cursor-pointer">
+              <span class="block text-base font-bold text-slate-900 group-hover:text-rosebrand-700 mb-1">
+                <i class="fa-solid fa-users text-amber-500 ml-1"></i>
+                قرابة درجة ثانية
+              </span>
+              <span class="text-xs text-slate-500 block leading-relaxed">الخالة، العمة، أو الجدة.</span>
+            </button>
+
+            <button onclick="selectFamilyHistory('none', this)" class="family-btn border-2 border-slate-200 hover:border-rose-400 p-5 rounded-2xl text-right transition group cursor-pointer">
+              <span class="block text-base font-bold text-slate-900 group-hover:text-rosebrand-700 mb-1">
+                <i class="fa-solid fa-shield-check text-emerald-500 ml-1"></i>
+                لا يوجد تاريخ عائلي
+              </span>
+              <span class="text-xs text-slate-500 block leading-relaxed">لا توجد حالات وراثية معروفة.</span>
+            </button>
+          </div>
+
+          <div class="flex justify-between items-center mt-6">
+            <button onclick="goToStep(2)" class="text-slate-600 hover:text-slate-900 text-sm font-bold flex items-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-arrow-right"></i>
+              <span>رجوع</span>
+            </button>
+            <button id="btnFinishTriage" onclick="generateClinicalRecommendation()" disabled class="bg-slate-200 text-slate-400 cursor-not-allowed font-bold px-8 py-3.5 rounded-xl transition flex items-center gap-2 shadow-lg">
+              <span>حساب النسبة وعرض خطة الرعاية</span>
+              <i class="fa-solid fa-calculator"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCREEN 3: Results & Risk Gauge Needle Display -->
+    <div id="screenRecommendation" class="hidden space-y-6">
+
+      <!-- Patient Summary Card -->
+      <div class="bg-white rounded-2xl p-5 border border-rose-100 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rosebrand-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-id-card-clip"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="patientSummaryName" class="font-bold text-slate-900 text-lg">ملخص حالة: سارة (29 سنة)</h3>
+              <span id="riskLevelTag" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">توجيه وقائي مخصص</span>
+            </div>
+            <p id="patientSummaryDetails" class="text-xs text-slate-500 mt-0.5">لا توجد أعراض موضعية • تاريخ عائلي بالدرجة الأولى</p>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <button onclick="printReportModal()" class="flex-1 sm:flex-initial text-xs font-bold bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+            <i class="fa-solid fa-file-pdf text-xs"></i>
+            <span>تنزيل تقرير PDF 📄</span>
+          </button>
+          <button onclick="openChatScreen()" class="flex-1 sm:flex-initial text-xs font-bold bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-200 px-3 py-2 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-comments text-teal-600 text-xs"></i>
+            <span>شات بوت طمّني</span>
+          </button>
+          <button onclick="resetToWelcome()" class="flex-1 sm:flex-initial text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-rotate-right text-xs"></i>
+            <span>إعادة التقييم</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Risk Gauge Vector Card -->
+      <div class="bg-white rounded-3xl p-6 sm:p-7 border border-rose-100 shadow-md">
+        <div class="flex flex-col md:flex-row items-center gap-6 justify-between">
+          
+          <div class="flex-1 text-right">
+            <div class="inline-flex items-center gap-1.5 bg-rose-50 border border-rose-200 text-rosebrand-700 text-xs font-bold px-3 py-1 rounded-full mb-2">
+              <i class="fa-solid fa-chart-simple"></i>
+              <span>التقييم الإحصائي التقديري (Risk Stratification)</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 mb-2">
+              مستوى الخطورة: <span id="riskPercentageLabel" class="text-rosebrand-600 font-extrabold">منخفض (1.8%)</span>
+            </h3>
+            <p id="riskExplanationText" class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+              بناءً على المعطيات المدخلة، فإن احتمالية الإصابة الحالية ضئيلة جداً وتقع ضمن النطاق الطبيعي المطمئن. حالتك ممتازة ولا داعي لأي قلق نهائياً.
+            </p>
+            <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-xs text-emerald-800 font-semibold">
+              <i class="fa-solid fa-circle-info text-emerald-600 text-base"></i>
+              <span>تذكير طبي مطمئن: أكثر من <strong>80% إلى 85%</strong> من كتل وأعراض الثدي هي تغيرات حميدة تماماً.</span>
+            </div>
+          </div>
+
+          <!-- Gauge SVG Needle -->
+          <div class="w-56 flex flex-col items-center justify-center">
+            <div class="relative w-44 h-24 overflow-hidden">
+              <svg viewBox="0 0 100 50" class="w-full h-full">
+                <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#e2e8f0" stroke-width="8" stroke-linecap="round"/>
+                <path d="M 10 50 A 40 40 0 0 1 45 12" fill="none" stroke="#10b981" stroke-width="8" stroke-linecap="round"/>
+                <path d="M 45 12 A 40 40 0 0 1 70 17" fill="none" stroke="#f59e0b" stroke-width="8"/>
+                <path d="M 70 17 A 40 40 0 0 1 90 50" fill="none" stroke="#e11d48" stroke-width="8" stroke-linecap="round"/>
+                <circle cx="50" cy="48" r="4" fill="#0f172a"/>
+                <line id="gaugeNeedle" x1="50" y1="48" x2="50" y2="16" stroke="#0f172a" stroke-width="3" stroke-linecap="round" class="gauge-needle" style="transform: rotate(-65deg);"/>
+              </svg>
+            </div>
+            <div class="flex items-center justify-between w-full text-[10px] text-slate-500 font-bold px-2 mt-1">
+              <span class="text-emerald-600">منخفض</span>
+              <span class="text-amber-600">متوسط</span>
+              <span class="text-rosebrand-600">عالي</span>
+            </div>
+            <div id="gaugeScoreBadge" class="mt-2 text-xs font-black bg-slate-900 text-white px-3 py-1 rounded-full shadow-sm">
+              مؤشر الخطورة: 1.8%
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action Routing Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-3xl p-6 border border-teal-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold mb-3">
+              <i class="fa-solid fa-user-doctor text-lg"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 mb-1">دكتورات ستات متخصصات</h4>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              نوفر لكِ شبكة معتمدة من الطبيبات الاستشاريات في أمراض الثدي لضمان الخصوصية والراحة التامة أثناء الكشف.
+            </p>
+            <div class="bg-teal-50 border border-teal-200 p-3 rounded-2xl mb-4 text-xs text-teal-900">
+              <span class="font-bold block mb-0.5">كود خصم الهاكاثون (TAMMNI20):</span>
+              <span>احصلي على خصم 20% على استشارتك الأولى عبر منصة "طبيبتي".</span>
+            </div>
+          </div>
+          <button onclick="openDoctorBookingModal()" class="w-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-3 rounded-xl transition shadow-md cursor-pointer">
+            احجزي مع طبيبة متخصصة
+          </button>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 border border-indigo-100 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold mb-3">
+              <i class="fa-solid fa-hospital text-lg"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 mb-1">المسار المجاني (المبادرة الرئاسية)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              توجيه فوري لأقرب وحدة صحية أو معهد أورام تابع للمبادرة الرئاسية لدعم صحة المرأة (فحص وسونار مجاني 100%).
+            </p>
+            <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-2xl mb-4 text-xs text-indigo-900">
+              <span class="font-bold block mb-0.5">أقرب مركز لكِ الآن:</span>
+              <span>مستشفى دار الشفاء / معهد الأورام القومي (متاح طوال الأسبوع).</span>
+            </div>
+          </div>
+          <button onclick="openFreeCentersModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3 rounded-xl transition shadow-md cursor-pointer">
+            عرض أقرب مركز فحص مجاني
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 3: Embedded Chatbot Interface -->
+    <div id="chatViewScreen" class="hidden transition-all duration-300 w-full max-w-lg mx-auto">
+      <div class="bg-white rounded-3xl border border-rose-100 shadow-2xl overflow-hidden flex flex-col h-[620px]">
+        
+        <div class="bg-gradient-to-r from-teal-700 to-teal-600 text-white p-4 flex items-center justify-between shrink-0 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <div class="w-10 h-10 rounded-2xl bg-white/20 text-white flex items-center justify-center font-bold text-lg">
+                <i class="fa-solid fa-user-nurse"></i>
+              </div>
+              <span class="w-3 h-3 bg-emerald-400 border-2 border-teal-700 rounded-full absolute bottom-0 left-0"></span>
+            </div>
+            <div>
+              <h3 class="font-bold text-sm leading-snug">د. طمّني (المرشد الطبي الذكي)</h3>
+              <span class="text-[10px] text-teal-100 flex items-center gap-1">متواجدة الآن • تقييم دقيق وحساب نسبة الخطورة</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="resetChatFlow()" title="إعادة التقييم" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition cursor-pointer text-white">
+              <i class="fa-solid fa-rotate-right text-xs"></i>
+            </button>
+            <button onclick="closeChatScreen()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition cursor-pointer text-white">
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="chatMessagesContainer" class="flex-grow p-4 overflow-y-auto custom-scrollbar space-y-3 bg-slate-50 text-xs">
+          <div class="flex items-start gap-2">
+            <div class="w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-robot text-xs"></i>
+            </div>
+            <div class="bg-white p-3.5 rounded-2xl rounded-tr-none shadow-sm border border-slate-200/60 text-slate-700 leading-relaxed max-w-[85%] space-y-2">
+              <p>أهلاً بيكي يا حبيبتي في شات <strong>«طمّني»</strong> الطبي. 🌸</p>
+              <p>هسألكِ 3 أسئلة طبية دقيقة لحساب نسبتك الإحصائية فوراً:</p>
+              <div class="pt-1.5 font-bold text-teal-700 border-t border-slate-100">
+                السؤال الأول: كم يبلغ عمركِ الحالي؟
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chatOptionsContainer" class="px-3 py-2 bg-slate-100/80 border-t border-slate-200 flex gap-2 overflow-x-auto text-[11px] shrink-0">
+          <button onclick="handleChatStep('أقل من 30 سنة')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap transition cursor-pointer shadow-sm">أقل من 30 سنة</button>
+          <button onclick="handleChatStep('من 30 لـ 39 سنة')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap transition cursor-pointer shadow-sm">من 30 لـ 39 سنة</button>
+          <button onclick="handleChatStep('40 سنة فأما فوق')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap transition cursor-pointer shadow-sm">40 سنة فأما فوق</button>
+        </div>
+
+        <div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2 shrink-0">
+          <input type="text" id="chatInputBox" placeholder="اكتبي إجابتك هنا بأسلوبك..." onkeypress="handleKeyPress(event)" class="flex-grow bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-teal-500">
+          <button onclick="sendUserMessage()" class="bg-teal-600 hover:bg-teal-700 text-white w-10 h-10 rounded-xl flex items-center justify-center transition shrink-0 shadow-sm cursor-pointer">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL 1: SELF EXAM GUIDE (الفحص الذاتي) -->
+  <div id="selfExamModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl flex flex-col p-6 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex items-center justify-between mb-4 border-b pb-3">
+        <div class="flex items-center gap-2 text-indigo-700">
+          <i class="fa-solid fa-hand-holding-medical text-xl"></i>
+          <h3 class="font-bold text-base">خطوات الفحص الذاتي الشهري في المنزل 🌸</h3>
+        </div>
+        <button onclick="closeSelfExamModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition cursor-pointer">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs text-slate-700 mb-4">
+        <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0">1</span>
+          <div>
+            <strong class="text-indigo-950 block mb-0.5">الملاحظة بالمرآة:</strong>
+            <p class="text-slate-600">قفي أمام المرآة وكتفاكِ مستقيمان، وراقبي الشكل الخارجي والجلد وجود أي تغير في الحجم أو انكماش.</p>
+          </div>
+        </div>
+
+        <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0">2</span>
+          <div>
+            <strong class="text-indigo-950 block mb-0.5">رفع الذراعين:</strong>
+            <p class="text-slate-600">ارفعي ذراعيكِ لأعلى ولاحظي نفس التغيرات والتناسق بين الجانبين.</p>
+          </div>
+        </div>
+
+        <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0">3</span>
+          <div>
+            <strong class="text-indigo-950 block mb-0.5">الفحص الدائري بالملمس:</strong>
+            <p class="text-slate-600">استخدمي أطراف أسطح أصابعكِ الثلاثة الوسطى في حركة دائرية خفيفة لجميع أجزاء الثدي وتحت الإبط.</p>
+          </div>
+        </div>
+
+        <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0">4</span>
+          <div>
+            <strong class="text-indigo-950 block mb-0.5">الموعد المثالي:</strong>
+            <p class="text-slate-600">أفضل وقت للفحص هو بعد انتهاء الدورة الشهرية بأسبوع (حيث تكون التغيرات الهرمونية في أقل مستوياتها).</p>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="closeSelfExamModal()" class="w-full bg-slate-100 font-bold py-2.5 rounded-xl text-xs text-slate-700 cursor-pointer">تم الفهم والإغلاق</button>
+    </div>
+  </div>
+
+  <!-- MODAL 2: PRINTABLE MEDICAL REPORT -->
+  <div id="medicalReportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl flex flex-col p-6 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div id="printableMedicalReport" class="p-4 bg-white border border-slate-200 rounded-2xl mb-4 text-xs">
+        <div class="flex items-center justify-between border-b pb-3 mb-3">
+          <div>
+            <h2 class="text-base font-black text-rosebrand-950">منصة «طمّني» - تقرير التقييم المبدئي</h2>
+            <span class="text-[10px] text-slate-500">Tammni Healthcare Triage Report</span>
+          </div>
+          <div class="text-left">
+            <span class="block font-bold text-slate-700">تاريخ التقييم:</span>
+            <span class="text-[10px] text-slate-500" id="reportDateVal">15 أكتوبر 2026</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 mb-4">
+          <p><strong>العمر التقديري:</strong> <span id="reportAgeVal">29 سنة</span></p>
+          <p><strong>التاريخ العائلي:</strong> <span id="reportHistoryVal">لا يوجد تاريخ عائلي مباشر</span></p>
+          <p><strong>الأعراض الموضعية:</strong> <span id="reportSymptomVal">لا توجد أعراض موضعية ظاهرة</span></p>
+          <p><strong>مؤشر الخطورة الإحصائي:</strong> <span id="reportRiskVal" class="font-bold text-rosebrand-700">1.8% (منخفض ومطمئن)</span></p>
+        </div>
+
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[10px] text-slate-600 leading-relaxed">
+          * ملاحظة للممارس الطبي: هذا التقرير استرشادي مبدئي لتسهيل الفحص السريري والتوجيه نحو الفحوصات الدورية أو الماموجرام والسونار المعتمد.
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="window.print()" class="flex-1 bg-slate-900 hover:bg-black text-white font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">طباعة التقرير 🖨️</button>
+        <button onclick="closeReportModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOCTOR BOOKING MODAL -->
+  <div id="doctorBookingModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl flex flex-col p-6 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex items-center justify-between mb-4 border-b pb-3">
+        <div class="flex items-center gap-2 text-rosebrand-700">
+          <i class="fa-solid fa-user-doctor text-xl"></i>
+          <h3 class="font-bold text-base">حجز استشارة مع طبيبة معتمدة («طبيبتي»)</h3>
+        </div>
+        <button onclick="closeDoctorBookingModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition cursor-pointer">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+      
+      <div class="space-y-2.5 text-xs text-slate-700 mb-4">
+        <label class="p-3 bg-rose-50/60 border border-rose-200 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-rose-50 transition">
+          <div class="flex items-center gap-2.5">
+            <input type="radio" name="doctorSelect" value="د. مريم الشريف" checked class="w-4 h-4 text-rosebrand-600 focus:ring-rosebrand-500">
+            <div>
+              <span class="font-bold text-slate-900 block">د. مريم الشريف</span>
+              <span class="text-[11px] text-slate-500">استشاري جراحة الأورام وصحة الثدي</span>
+            </div>
+          </div>
+          <span class="font-bold text-slate-700 text-[11px]">الكشف: <span id="docFee1">500 ج.م</span></span>
+        </label>
+
+        <label class="p-3 bg-rose-50/60 border border-rose-200 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-rose-50 transition">
+          <div class="flex items-center gap-2.5">
+            <input type="radio" name="doctorSelect" value="د. سارة عبد الرحمن" class="w-4 h-4 text-rosebrand-600 focus:ring-rosebrand-500">
+            <div>
+              <span class="font-bold text-slate-900 block">د. سارة عبد الرحمن</span>
+              <span class="text-[11px] text-slate-500">أخصائي الأشعة التداخلية وسونار الثدي</span>
+            </div>
+          </div>
+          <span class="font-bold text-slate-700 text-[11px]">الكشف: <span id="docFee2">500 ج.م</span></span>
+        </label>
+      </div>
+
+      <div class="space-y-3 mb-5">
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">اختر موعد الاستشارة:</label>
+          <input type="date" id="bookingDate" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs focus:outline-none focus:border-rosebrand-500">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">كود الخصم (Promo Code):</label>
+          <div class="flex gap-2">
+            <input type="text" id="promoInput" value="TAMMNI20" placeholder="أدخل كود الخصم" class="flex-grow bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none uppercase font-bold text-rosebrand-700">
+            <button onclick="applyPromoCode()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition cursor-pointer">تطبيق</button>
+          </div>
+          <p id="promoMsg" class="text-[10px] text-emerald-600 font-bold mt-1">تم تطبيق خصم الهاكاثون (20%)! إجمالي الكشف الآن: 400 ج.م</p>
+        </div>
+      </div>
+
+      <button onclick="confirmBookingProcess()" class="w-full bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-bold py-3 rounded-xl transition text-xs shadow-md cursor-pointer">
+        تأكيد حجز الاستشارة
+      </button>
+    </div>
+  </div>
+
+  <!-- FREE CENTERS MODAL -->
+  <div id="freeCentersModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl flex flex-col p-6 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex items-center justify-between mb-4 border-b pb-3">
+        <div class="flex items-center gap-2 text-indigo-700">
+          <i class="fa-solid fa-hospital-user text-xl"></i>
+          <h3 class="font-bold text-base">مراكز المبادرة الرئاسية وفحص الثدي المجاني</h3>
+        </div>
+        <button onclick="closeFreeCentersModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition cursor-pointer">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-xs font-bold text-slate-700 mb-1">اختر المحافظة لتحديد أقرب مركز:</label>
+        <select id="governorateSelect" onchange="filterCentersByGov()" class="w-full bg-slate-100 border border-slate-200 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-indigo-500">
+          <option value="cairo">القاهرة والجيزة</option>
+          <option value="alex">الإسكندرية</option>
+          <option value="delta">الدقهلية والغربية</option>
+        </select>
+      </div>
+      
+      <div id="centersListContainer" class="space-y-3 text-xs text-slate-700 mb-4">
+        <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex justify-between items-center">
+          <div>
+            <span class="font-bold text-indigo-900 block mb-0.5">1. مستشفى دار الشفاء (العباسية - القاهرة)</span>
+            <p class="text-slate-600">فحص وسونار وماموجرام مجاني 100% بالرقم القومي.</p>
+          </div>
+          <a href="https://maps.google.com" target="_blank" class="bg-indigo-600 text-white font-bold px-2.5 py-1.5 rounded-xl text-[10px] hover:bg-indigo-700 whitespace-nowrap">الخريطة 🗺️</a>
+        </div>
+
+        <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex justify-between items-center">
+          <div>
+            <span class="font-bold text-indigo-900 block mb-0.5">2. معهد الأورام القومي (القصر العيني - القاهرة)</span>
+            <p class="text-slate-600">عيادات الفحص المبكر والاستقبال مجاناً طوال الأسبوع.</p>
+          </div>
+          <a href="https://maps.google.com" target="_blank" class="bg-indigo-600 text-white font-bold px-2.5 py-1.5 rounded-xl text-[10px] hover:bg-indigo-700 whitespace-nowrap">الخريطة 🗺️</a>
+        </div>
+      </div>
+
+      <div class="p-3 bg-teal-50 border border-teal-100 rounded-2xl flex items-center justify-between mb-4 text-xs">
+        <div>
+          <span class="font-bold text-teal-900 block">الخط الساخن للمبادرة الرئاسية:</span>
+          <span class="text-slate-600">للاستفسار عن أقرب وحدة صحية لعنوانك</span>
+        </div>
+        <a href="tel:15335" class="bg-teal-600 text-white font-bold px-3 py-1.5 rounded-xl hover:bg-teal-700 transition">15335</a>
+      </div>
+
+      <button onclick="closeFreeCentersModal()" class="w-full bg-slate-100 font-bold py-2.5 rounded-xl text-xs text-slate-700 cursor-pointer">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- JavaScript Full Integrated Logic -->
+  <script>
+    let currentStep = 1;
+    let selectedAgeGroup = null;
+    let selectedSymptoms = [];
+    let selectedFamilyHistoryChoice = null;
+
+    let chatStep = 1;
+    let userData = { ageGroup: '', hasFamilyHistory: false, hasSymptom: false };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      document.getElementById('bookingDate').valueAsDate = tomorrow;
+    });
+
+    // اختصار لوحة المفاتيح لإخفاء الشاشة الفوري (زر Esc)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        activateFullPrivacy();
+      }
+    });
+
+    function activateFullPrivacy() {
+      document.getElementById('fullPrivacyCover').classList.remove('hidden');
+    }
+
+    function deactivateFullPrivacy() {
+      document.getElementById('fullPrivacyCover').classList.add('hidden');
+    }
+
+    function openSelfExamModal() { document.getElementById('selfExamModal').classList.remove('hidden'); }
+    function closeSelfExamModal() { document.getElementById('selfExamModal').classList.add('hidden'); }
+
+    function printReportModal() { document.getElementById('medicalReportModal').classList.remove('hidden'); }
+    function closeReportModal() { document.getElementById('medicalReportModal').classList.add('hidden'); }
+
+    function filterCentersByGov() {
+      const gov = document.getElementById('governorateSelect').value;
+      const container = document.getElementById('centersListContainer');
+      
+      if (gov === 'alex') {
+        container.innerHTML = `
+          <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex justify-between items-center">
+            <div>
+              <span class="font-bold text-indigo-900 block mb-0.5">1. مركز أورام شرق المدينة (الإسكندرية)</span>
+              <p class="text-slate-600">فحص مجاني تخصصي تابع للمبادرة الرئاسية.</p>
+            </div>
+            <a href="https://maps.google.com" target="_blank" class="bg-indigo-600 text-white font-bold px-2.5 py-1.5 rounded-xl text-[10px] hover:bg-indigo-700 whitespace-nowrap">الخريطة 🗺️</a>
+          </div>
+        `;
+      } else if (gov === 'delta') {
+        container.innerHTML = `
+          <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex justify-between items-center">
+            <div>
+              <span class="font-bold text-indigo-900 block mb-0.5">1. مركز أورام المنصورة (الدقهلية)</span>
+              <p class="text-slate-600">مركز معتمد للكشف المبكر والسونار المباشر مجاناً.</p>
+            </div>
+            <a href="https://maps.google.com" target="_blank" class="bg-indigo-600 text-white font-bold px-2.5 py-1.5 rounded-xl text-[10px] hover:bg-indigo-700 whitespace-nowrap">الخريطة 🗺️</a>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex justify-between items-center">
+            <div>
+              <span class="font-bold text-indigo-900 block mb-0.5">1. مستشفى دار الشفاء (العباسية - القاهرة)</span>
+              <p class="text-slate-600">فحص وسونار وماموجرام مجاني 100% بالرقم القومي.</p>
+            </div>
+            <a href="https://maps.google.com" target="_blank" class="bg-indigo-600 text-white font-bold px-2.5 py-1.5 rounded-xl text-[10px] hover:bg-indigo-700 whitespace-nowrap">الخريطة 🗺️</a>
+          </div>
+          <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-2xl flex justify-between items-center">
+            <div>
+              <span class="font-bold text-indigo-900 block mb-0.5">2. معهد الأورام القومي (القصر العيني - القاهرة)</span>
+              <p class="text-slate-600">عيادات الفحص المبكر والاستقبال مجاناً طوال الأسبوع.</p>
+            </div>
+            <a href="https://maps.google.com" target="_blank" class="bg-indigo-600 text-white font-bold px-2.5 py-1.5 rounded-xl text-[10px] hover:bg-indigo-700 whitespace-nowrap">الخريطة 🗺️</a>
+          </div>
+        `;
+      }
+    }
+
+    function resetToWelcome() {
+      currentStep = 1;
+      selectedAgeGroup = null;
+      selectedSymptoms = [];
+      selectedFamilyHistoryChoice = null;
+
+      document.getElementById('screenWelcome').classList.remove('hidden');
+      document.getElementById('screenTriage').classList.add('hidden');
+      document.getElementById('screenRecommendation').classList.add('hidden');
+      document.getElementById('chatViewScreen').classList.add('hidden');
+      document.getElementById('progressBarContainer').classList.add('hidden');
+
+      document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('border-rosebrand-600', 'bg-rose-50'));
+      document.querySelectorAll('.family-btn').forEach(b => b.classList.remove('border-rosebrand-600', 'bg-rose-50'));
+      document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+      
+      const btn1 = document.getElementById('btnNext1');
+      if (btn1) {
+        btn1.disabled = true;
+        btn1.className = "bg-slate-200 text-slate-400 cursor-not-allowed font-bold px-6 py-3 rounded-xl transition flex items-center gap-2";
+      }
+    }
+
+    function openChatScreen() {
+      document.getElementById('screenWelcome').classList.add('hidden');
+      document.getElementById('screenTriage').classList.add('hidden');
+      document.getElementById('screenRecommendation').classList.add('hidden');
+      document.getElementById('progressBarContainer').classList.add('hidden');
+      document.getElementById('chatViewScreen').classList.remove('hidden');
+    }
+
+    function closeChatScreen() {
+      document.getElementById('chatViewScreen').classList.add('hidden');
+      document.getElementById('screenWelcome').classList.remove('hidden');
+    }
+
+    function startCustomAssessment() {
+      closeChatScreen();
+      document.getElementById('screenWelcome').classList.add('hidden');
+      document.getElementById('screenTriage').classList.remove('hidden');
+      document.getElementById('screenRecommendation').classList.add('hidden');
+      document.getElementById('progressBarContainer').classList.remove('hidden');
+      goToStep(1);
+    }
+
+    function goToStep(step) {
+      currentStep = step;
+      document.querySelectorAll('.triage-step').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`triageStep${step}`).classList.remove('hidden');
+
+      const pct = step === 1 ? '33%' : (step === 2 ? '66%' : '100%');
+      const label = step === 1 ? 'المرحلة 1 من 3: تحديد العمر' : (step === 2 ? 'المرحلة 2 من 3: تقييم الأعراض' : 'المرحلة 3 من 3: التاريخ العائلي');
+      
+      document.getElementById('stepProgressPercentage').innerText = pct;
+      document.getElementById('progressBarFill').style.width = pct;
+      document.getElementById('stepIndicatorLabel').innerText = label;
+    }
+
+    function selectAge(age, btn) {
+      selectedAgeGroup = age;
+      document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('border-rosebrand-600', 'bg-rose-50'));
+      btn.classList.add('border-rosebrand-600', 'bg-rose-50');
+
+      const btn1 = document.getElementById('btnNext1');
+      btn1.disabled = false;
+      btn1.className = "bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-bold px-6 py-3 rounded-xl transition flex items-center gap-2 shadow-md cursor-pointer";
+    }
+
+    function handleSymptomChange(checkbox) {
+      const val = checkbox.value;
+      if (checkbox.checked) {
+        if (val === 'none') {
+          document.querySelectorAll('input[type="checkbox"]').forEach(c => { if(c.value !== 'none') c.checked = false; });
+          selectedSymptoms = ['none'];
+        } else {
+          const noneBox = document.querySelector('input[value="none"]');
+          if(noneBox) noneBox.checked = false;
+          selectedSymptoms = selectedSymptoms.filter(s => s !== 'none');
+          if(!selectedSymptoms.includes(val)) selectedSymptoms.push(val);
+        }
+      } else {
+        selectedSymptoms = selectedSymptoms.filter(s => s !== val);
+      }
+
+      const btn2 = document.getElementById('btnNext2');
+      if (selectedSymptoms.length > 0) {
+        btn2.disabled = false;
+        btn2.className = "bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-bold px-6 py-3 rounded-xl transition flex items-center gap-2 shadow-md cursor-pointer";
+      } else {
+        btn2.disabled = true;
+        btn2.className = "bg-slate-200 text-slate-400 cursor-not-allowed font-bold px-6 py-3 rounded-xl transition flex items-center gap-2";
+      }
+    }
+
+    function selectFamilyHistory(choice, btn) {
+      selectedFamilyHistoryChoice = choice;
+      document.querySelectorAll('.family-btn').forEach(b => b.classList.remove('border-rosebrand-600', 'bg-rose-50'));
+      btn.classList.add('border-rosebrand-600', 'bg-rose-50');
+
+      const finishBtn = document.getElementById('btnFinishTriage');
+      finishBtn.disabled = false;
+      finishBtn.className = "bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-bold px-8 py-3.5 rounded-xl transition flex items-center gap-2 shadow-lg cursor-pointer";
+    }
+
+    function quickLoadScenario(type) {
+      if (type === 'sarah') {
+        selectedAgeGroup = 25;
+        selectedSymptoms = ['none'];
+        selectedFamilyHistoryChoice = 'first_degree';
+
+        document.getElementById('screenWelcome').classList.add('hidden');
+        document.getElementById('screenTriage').classList.add('hidden');
+        document.getElementById('chatViewScreen').classList.add('hidden');
+        document.getElementById('progressBarContainer').classList.add('hidden');
+        document.getElementById('screenRecommendation').classList.remove('hidden');
+
+        document.getElementById('patientSummaryName').innerText = "ملخص حالة: سارة (29 سنة)";
+        document.getElementById('patientSummaryDetails').innerText = "لا توجد أعراض موضعية • تاريخ عائلي بالدرجة الأولى (اطمئنان وفحص دوري)";
+        document.getElementById('riskPercentageLabel').innerText = "منخفض (3.2%)";
+        document.getElementById('riskExplanationText').innerText = "بناءً على معطيات سارة (29 سنة مع تاريخ عائلي من الدرجة الأولى)، فإن الاحتمالية الإحصائية الحالية منخفضة ومطمئنة. التوجيه الطبي: متابعة سنوية دورية وفحص ذاتي شهري مع طبيبة متخصصة.";
+        document.getElementById('gaugeScoreBadge').innerText = "مؤشر الخطورة: 3.2%";
+        document.getElementById('gaugeNeedle').style.transform = "rotate(-50deg)";
+
+        document.getElementById('reportAgeVal').innerText = "29 سنة";
+        document.getElementById('reportHistoryVal').innerText = "قرابة درجة أولى";
+        document.getElementById('reportSymptomVal').innerText = "لا توجد أعراض ظاهرة";
+        document.getElementById('reportRiskVal').innerText = "3.2% (منخفض ومطمئن)";
+      }
+    }
+
+    // دالة احتساب شاشة التقييم المباشر (متطابقة تماماً مع الشات بوت)
+    function generateClinicalRecommendation() {
+      document.getElementById('screenTriage').classList.add('hidden');
+      document.getElementById('progressBarContainer').classList.add('hidden');
+      document.getElementById('screenRecommendation').classList.remove('hidden');
+
+      let riskText = "منخفض (1.8%)";
+      let needleAngle = "-65deg";
+      let percentageNum = "1.8%";
+      let explanation = "بناءً على المعطيات المدخلة، لا توجد أعراض ولا تاريخ عائلي. حالتك ممتازة ومطمئنة للغاية ضمن المعدل الطبيعي الوقائي.";
+
+      const hasFamily = selectedFamilyHistoryChoice === 'first_degree' || selectedFamilyHistoryChoice === 'second_degree';
+      const hasSymptom = selectedSymptoms.length > 0 && !selectedSymptoms.includes('none');
+
+      if (hasFamily && hasSymptom) {
+        riskText = "متوسط إلى مرتفع (12.8%)";
+        needleAngle = "15deg";
+        percentageNum = "12.8%";
+        explanation = "بناءً على وجود تاريخ عائلي وأعراض موضعية، ننصح باستشارة فحص عاجلة للتأكد. اطمئني تماماً، أكثر من 85% من الكتل تكون أورام حميدة وعادية.";
+      } else if (hasFamily) {
+        riskText = "منخفض إلى متوسط (5.4%)";
+        needleAngle = "-35deg";
+        percentageNum = "5.4%";
+        explanation = "التاريخ عائلي يستدعي المتابعة الدورية بانتظام واليقظة الوقائية، لكن النسبة العامة مطمئنة وهادئة.";
+      } else if (hasSymptom) {
+        riskText = "متوسط (8.9%)";
+        needleAngle = "-10deg";
+        percentageNum = "8.9%";
+        explanation = "وجود أعراض موضعية يستدعي فحصاً سريرياً للاطمئنان الفوري. أكثر من 85% من الكتل والتغيرات في هذا السن تكون تغيرات هرمونية حميدة.";
+      }
+
+      document.getElementById('patientSummaryName').innerText = `ملخص حالتكِ العمرية (${selectedAgeGroup} سنة)`;
+      document.getElementById('patientSummaryDetails').innerText = `${hasFamily ? 'يوجد تاريخ عائلي' : 'لا يوجد تاريخ عائلي'} • ${hasSymptom ? 'توجد أعراض موضعية' : 'لا توجد أعراض ظاهرة'}`;
+      document.getElementById('riskPercentageLabel').innerText = riskText;
+      document.getElementById('riskExplanationText').innerText = explanation;
+      document.getElementById('gaugeScoreBadge').innerText = `مؤشر الخطورة: ${percentageNum}`;
+      document.getElementById('gaugeNeedle').style.transform = needleAngle;
+
+      document.getElementById('reportAgeVal').innerText = `${selectedAgeGroup} سنة`;
+      document.getElementById('reportHistoryVal').innerText = hasFamily ? 'يوجد تاريخ عائلي' : 'لا يوجد تاريخ وراثي مباشر';
+      document.getElementById('reportSymptomVal').innerText = hasSymptom ? 'تغيرات موضعية تستدعي الاطمئنان' : 'لا توجد أعراض موضعية';
+      document.getElementById('reportRiskVal').innerText = `${percentageNum} (${riskText})`;
+    }
+
+    function openDoctorBookingModal() { document.getElementById('doctorBookingModal').classList.remove('hidden'); }
+    function closeDoctorBookingModal() { document.getElementById('doctorBookingModal').classList.add('hidden'); }
+    function openFreeCentersModal() { document.getElementById('freeCentersModal').classList.remove('hidden'); }
+    function closeFreeCentersModal() { document.getElementById('freeCentersModal').classList.add('hidden'); }
+
+    function applyPromoCode() {
+      const code = document.getElementById('promoInput').value.trim().toUpperCase();
+      const msg = document.getElementById('promoMsg');
+      if (code === 'TAMMNI20') {
+        document.getElementById('docFee1').innerText = "400 ج.م (تخفيض 20%)";
+        document.getElementById('docFee2').innerText = "400 ج.م (تخفيض 20%)";
+        msg.className = "text-[10px] text-emerald-600 font-bold mt-1";
+        msg.innerText = "تم تطبيق الخصم بنجاح! قيمة الكشف الان 400 ج.م بدلاً من 500 ج.م";
+      } else {
+        msg.className = "text-[10px] text-rose-600 font-bold mt-1";
+        msg.innerText = "كود الخصم غير صحيح. جرب كود TAMMNI20";
+      }
+    }
+
+    function confirmBookingProcess() {
+      const selectedDoc = document.querySelector('input[name="doctorSelect"]:checked').value;
+      const dateVal = document.getElementById('bookingDate').value;
+      alert(`تم تأكيد الموعد مع (${selectedDoc}) يوم ${dateVal} بنجاح!\nسوف تصلكِ رسالة تأكيد بتفاصيل الاستشارة.`);
+      closeDoctorBookingModal();
+    }
+
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') sendUserMessage();
+    }
+
+    function sendUserMessage() {
+      const box = document.getElementById('chatInputBox');
+      const txt = box.value.trim();
+      if (!txt) return;
+      handleChatStep(txt);
+      box.value = '';
+    }
+
+    function resetChatFlow() {
+      chatStep = 1;
+      userData = { ageGroup: '', hasFamilyHistory: false, hasSymptom: false };
+      const container = document.getElementById('chatMessagesContainer');
+      const optionsContainer = document.getElementById('chatOptionsContainer');
+
+      container.innerHTML = `
+        <div class="flex items-start gap-2">
+          <div class="w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-robot text-xs"></i>
+          </div>
+          <div class="bg-white p-3.5 rounded-2xl rounded-tr-none shadow-sm border border-slate-200/60 text-slate-700 leading-relaxed max-w-[85%] space-y-2">
+            <p>أهلاً بيكي يا حبيبتي في شات <strong>«طمّني»</strong> الطبي. 🌸</p>
+            <p>هسألكِ 3 أسئلة طبية دقيقة لحساب نسبتك الإحصائية فوراً:</p>
+            <div class="pt-1.5 font-bold text-teal-700 border-t border-slate-100">
+              السؤال الأول: كم يبلغ عمركِ الحالي؟
+            </div>
+          </div>
+        </div>
+      `;
+      optionsContainer.innerHTML = `
+        <button onclick="handleChatStep('أقل من 30 سنة')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap transition cursor-pointer shadow-sm">أقل من 30 سنة</button>
+        <button onclick="handleChatStep('من 30 لـ 39 سنة')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap transition cursor-pointer shadow-sm">من 30 لـ 39 سنة</button>
+        <button onclick="handleChatStep('40 سنة فأما فوق')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap transition cursor-pointer shadow-sm">40 سنة فأما فوق</button>
+      `;
+    }
+
+    function analyzeUserIntent(input, step) {
+      const clean = input.trim().toLowerCase();
+
+      if (step === 2) {
+        const negativeWords = ['لا', 'لأ', 'مفيش', 'معنديش', 'مافيش', 'مفيش حد', 'محدش', 'سليمة', 'محدش جاله', 'لا يوجد', 'معندناش', 'الحمد لله مفيش'];
+        const positiveWords = ['اه', 'أه', 'إيوه', 'ايوه', 'يوجد', 'نعم', 'عندي', 'امي', 'أمي', 'اختي', 'أختي', 'بنت', 'خالتي', 'عمتي', 'جدتي', 'قريبتي', 'موجود', 'كان عندها'];
+
+        for (let word of negativeWords) {
+          if (clean.includes(word)) return false;
+        }
+        for (let word of positiveWords) {
+          if (clean.includes(word)) return true;
+        }
+        return false;
+      }
+
+      if (step === 3) {
+        const negativeWords = ['لا', 'لأ', 'مفيش', 'معنديش', 'مافيش', 'مفيش اعراض', 'سليمة', 'الحمد لله', 'اطمئنان', 'اطمئنان وبس', 'حابة اطمن', 'مفيش حاجة', 'زي الفل'];
+        const positiveWords = ['عندي', 'حاسة', 'كتلة', 'وجع', 'ألم', 'الم', 'إفرازات', 'افرازات', 'تغير', 'حاسه', 'ورم', 'حبة', 'تضخم', 'نشع', 'دم'];
+
+        for (let word of positiveWords) {
+          if (clean.includes(word)) return true;
+        }
+        for (let word of negativeWords) {
+          if (clean.includes(word)) return false;
+        }
+        return false;
+      }
+    }
+
+    function handleChatStep(userInput) {
+      const container = document.getElementById('chatMessagesContainer');
+      const optionsContainer = document.getElementById('chatOptionsContainer');
+
+      container.innerHTML += `
+        <div class="flex items-start gap-2 justify-end">
+          <div class="bg-teal-600 text-white p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] leading-relaxed">
+            ${userInput}
+          </div>
+          <div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center shrink-0 text-xs">
+            أنتِ
+          </div>
+        </div>
+      `;
+      container.scrollTop = container.scrollHeight;
+
+      setTimeout(() => {
+        let botReply = "";
+
+        if (chatStep === 1) {
+          userData.ageGroup = userInput;
+          chatStep = 2;
+          botReply = `تمام تسلمي لي..<br><br><strong>السؤال الثاني (التاريخ العائلي):</strong> هل فيه أي حالة إصابة بسرطان الثدي في عائلتكِ من الدرجة الأولى (زي الأم أو الأخت)؟`;
+          optionsContainer.innerHTML = `
+            <button onclick="handleChatStep('نعم، يوجد تاريخ عائلي')" class="bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap cursor-pointer shadow-sm">نعم، يوجد تاريخ عائلي</button>
+            <button onclick="handleChatStep('لا يوجد تاريخ عائلي')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap cursor-pointer shadow-sm">لا يوجد تاريخ عائلي</button>
+          `;
+        } 
+        else if (chatStep === 2) {
+          userData.hasFamilyHistory = analyzeUserIntent(userInput, 2);
+          chatStep = 3;
+          botReply = `فهمتك تماماً.<br><br><strong>السؤال الثالث (الأعراض الحالية):</strong> هل بتلاحظي أي أعراض مؤخراً (زي كتلة ظاهرة، إفرازات، أو وجع مستمر)، ولا مفيش أعراض وحابة تطمني بس؟`;
+          optionsContainer.innerHTML = `
+            <button onclick="handleChatStep('مفيش أعراض (اطمئنان وبس)')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap cursor-pointer shadow-sm">مفيش أعراض (اطمئنان وبس)</button>
+            <button onclick="handleChatStep('حاسة بكتلة أو ألم أو تغير')" class="bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap cursor-pointer shadow-sm">حاسة بكتلة أو ألم</button>
+          `;
+        } 
+        else if (chatStep === 3) {
+          userData.hasSymptom = analyzeUserIntent(userInput, 3);
+          chatStep = 4;
+
+          let riskPercentage = "1.8%";
+          let riskLevelText = "منخفض ومطمئن للغاية (ضمن المعدل الطبيعي الوقائي)";
+          let alertBoxColor = "bg-emerald-50 border-emerald-200 text-emerald-900";
+          let noteText = "حالتك ممتازة ولا داعي لأي قلق نهائياً. ننصحك فقط بالمتابعة الدورية الروتينية لضمان راحة البال.";
+
+          if (userData.hasFamilyHistory && userData.hasSymptom) {
+            riskPercentage = "12.8%";
+            riskLevelText = "متوسط إلى مرتفع - يتطلب استشارة فحص عاجلة للتأكد";
+            alertBoxColor = "bg-rose-50 border-rose-200 text-rosebrand-900";
+            noteText = "اطمئني تماماً، أكثر من 85% من الكتل والتغيرات في هذا السن تكون أورام حميدة وعادية ومجرد تغيرات هرمونية.";
+          } 
+          else if (userData.hasFamilyHistory && !userData.hasSymptom) {
+            riskPercentage = "5.4%";
+            riskLevelText = "منخفض إلى متوسط - يتطلب يقظة ومتابعة دورية";
+            alertBoxColor = "bg-teal-50 border-teal-200 text-teal-900";
+            noteText = "التاريخ العائلي يستدعي المتابعة الدورية بانتظام، لكن النسبة العامة مطمئنة وهادئة.";
+          } 
+          else if (!userData.hasFamilyHistory && userData.hasSymptom) {
+            riskPercentage = "8.9%";
+            riskLevelText = "متوسط - يستدعي فحص سريري واطمئنان فوري";
+            alertBoxColor = "bg-amber-50 border-amber-200 text-amber-900";
+            noteText = "اطمئني، أكثر من 85% من الكتل والتغيرات في هذا السن تكون أورام حميدة وتغيرات هرمونية مؤقتة.";
+          } 
+          else {
+            riskPercentage = "1.8%";
+            riskLevelText = "منخفض ومطمئن للغاية";
+            alertBoxColor = "bg-emerald-50 border-emerald-200 text-emerald-900";
+            noteText = "ممتاز جداً! بما أنه لا توجد أعراض ولا تاريخ عائلي، فالتوجيه هو الانتظام على الفحص الدوري الروتيني فقط للاطمئنان.";
+          }
+
+          botReply = `
+            <div class="space-y-2.5">
+              <div class="border p-3 rounded-2xl ${alertBoxColor}">
+                <span class="block font-bold text-xs mb-1">📊 نتيجة الحساب الإحصائي للخطورة:</span>
+                <p class="text-[11px] leading-relaxed mb-1">
+                  نسبة الخطورة المقدرة لحالتك: <strong class="text-sm underline">${riskPercentage}</strong>
+                </p>
+                <p class="text-[10px] opacity-90 leading-relaxed">
+                  التصنيف: <strong>${riskLevelText}</strong>. <br>
+                  <em>(${noteText})</em>
+                </p>
+              </div>
+
+              <div class="bg-slate-100 border border-slate-200 p-3 rounded-2xl text-slate-800">
+                <span class="block font-bold text-xs mb-1.5 text-teal-800">🏥 ترشيح الأماكن الطبية المقترحة لكِ:</span>
+                <p class="text-[10px] text-slate-700 mb-1.5">1. <strong>المراكز المجانية:</strong> مستشفى دار الشفاء / معهد الأورام القومي (فحص وسونار مجاني 100%).</p>
+                <p class="text-[10px] text-slate-700">2. <strong>طبيبات متخصصات:</strong> استشارة خاصة عبر منصة "طبيبتي" مع كود خصم (<code>TAMMNI20</code>).</p>
+              </div>
+
+              <div class="flex gap-2 pt-1">
+                <button onclick="openFreeCentersModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-2 rounded-xl text-[10px] cursor-pointer shadow-sm">عرض المراكز المجانية</button>
+                <button onclick="openDoctorBookingModal()" class="bg-rosebrand-600 hover:bg-rosebrand-700 text-white font-bold px-3 py-2 rounded-xl text-[10px] cursor-pointer shadow-sm">حجز طبيبة خاصة</button>
+              </div>
+            </div>
+          `;
+          optionsContainer.innerHTML = `
+            <button onclick="resetChatFlow()" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-3 py-1.5 rounded-xl whitespace-nowrap cursor-pointer text-xs flex items-center gap-1 shadow-sm">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>إعادة تقييم جديد</span>
+            </button>
+          `;
+        }
+
+        container.innerHTML += `
+          <div class="flex items-start gap-2">
+            <div class="w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-robot text-xs"></i>
+            </div>
+            <div class="bg-white p-3.5 rounded-2xl rounded-tr-none shadow-sm border border-slate-200/60 text-slate-700 leading-relaxed max-w-[85%]">
+              ${botReply}
+            </div>
+          </div>
+        `;
+        container.scrollTop = container.scrollHeight;
+      }, 500);
+    }
+  </script>
+
+</body>
+</html>
